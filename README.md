@@ -1,59 +1,53 @@
-# PersonalBlog
+﻿# Chris  — Personal Blog
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+Angular 20 standalone components, TypeScript, and SCSS. No added runtime dependencies.
 
-## Development server
+## Run locally
 
-To start a local development server, run:
-
-```bash
-ng serve
+```sh
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open http://localhost:4200. On PowerShell systems that block npm.ps1, use `npm.cmd`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```sh
+npm run build
+npm test -- --watch=false --browsers=ChromeHeadless
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Production output: `dist/personal-blog/browser`. Configure static hosting to serve `index.html` for unknown routes so article deep links work.
 
-```bash
-ng generate --help
-```
+## Structure
 
-## Building
+- `src/app/home.*`: responsive home layout and signal-based search.
+- `src/app/components/`: reusable header, hero, post card, About sidebar, and footer.
+- `src/app/data/blog-post.ts`: readonly presentation model.
+- `src/app/data/posts.service.ts`: typed WordPress HTTP requests and response mapping.
+- `src/app/post-page.ts`: lazy-loaded article view with missing-post handling.
+- `src/styles.scss`: shared colors, typography, layout container, and accessibility styles.
 
-To build the project run:
+Posts load from `https://public-api.wordpress.com/wp/v2/sites/dreamcapsite.wordpress.com/posts`, with `_embed=1` for featured media and category names. The home page fetches 10 posts at a time, newest first, with a Load more button; search filters the posts loaded so far. Article deep links fetch by slug independently of the list. Loading, retry, empty, and missing-post states are handled. Public posts require no credentials.
 
-```bash
-ng build
-```
+WordPress titles and excerpts become plain text, with HTML entities decoded and the excerpt’s Read more link removed. Article HTML uses Angular’s standard `[innerHTML]` sanitization, preserving paragraphs, links, lists, and inline images without bypassing security.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Images prefer embedded featured media, then Jetpack’s featured URL, then the first article image. The legacy URL `https://i0.wp.com/localhost/images/autumn-road.png` maps to the existing `/images/autumn-road.png` asset, including inside article HTML. This is a specific compatibility mapping; new images should be uploaded to the WordPress Media Library to get publicly accessible URLs. Featured images already present in the article are not duplicated above it. Posts without an image use the cycling hero as a fallback.
 
-## Running unit tests
+## Assets
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+All images and the Inter variable font are served locally. The original screenshot supplied layout guidance; generated photography approximates its imagery. The About image is an illustrative avatar, not a photograph of Chris.
 
-```bash
-ng test
-```
+- `public/images/cycling-sunset.png`: generated hero photograph.
+- `public/images/autumn-road.png`: generated autumn road photograph.
+- `public/images/about.png`: generated illustrative avatar.
+- `public/images/gym.jpg`: Unsplash photo `1534438327276-14e5300c3a48`.
+- `public/images/development.jpg`: Unsplash photo `1498050108023-c5249f4df085`.
+- `public/fonts/InterVariable.woff2`: Inter by Rasmus Andersson; license in `public/fonts/OFL.txt`.
 
-## Running end-to-end tests
+Generated with the built-in image generation tool, using these final prompts:
 
-For end-to-end (e2e) testing, run:
+**Hero:** Use case: photorealistic-natural. Asset type: wide personal blog hero background photograph, aspect ratio 3:1. A black road bicycle with drop handlebars leaning beside a rough stone wall at a mountain overlook at sunset, bicycle on rightmost quarter of composition. Layered dark blue mountain ridges, orange sunset with sun near right third, dusky blue and muted pink sky. Left half open landscape dark enough for white headline overlay. Natural editorial photography. No text, typography, graphics, UI, watermark or logos. Save generated image to project asset when possible.
 
-```bash
-ng e2e
-```
+**Road:** Use case: photorealistic-natural. Asset type: personal blog thumbnail photo, landscape 2:1. A gently curving paved road with yellow center line through a dense forest of golden autumn trees, warm late afternoon light, green and orange foliage, quiet reflective mood. No people, no text, no logos. Natural photography.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Avatar:** Use case: photorealistic-natural. Asset type: square personal blog avatar photograph. A single anonymous adult man viewed from behind, dark jacket and small backpack, standing at mountain overlook watching orange sunset, layered dark blue hills, dark silhouette head centered in frame, upper body portrait. Minimal quiet outdoors editorial photo. No text or logos.

@@ -1,0 +1,15 @@
+:host { display: block; }
+article { display: grid; grid-template-columns: 246px minmax(0, 1fr); gap: 30px; padding: 21px 0 24px; }
+.thumbnail { overflow: hidden; border-radius: 10px; height: 118px; background: #20292f; }
+img { width: 100%; height: 100%; object-fit: cover; transition: transform .2s ease; }
+.thumbnail:hover img { transform: scale(1.035); }
+h3 { font-size: 23px; line-height: 1.25; letter-spacing: -.45px; margin: 1px 0 6px; font-weight: 720; }
+h3 a:hover { color: var(--accent); }
+.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: var(--text-muted); font-size: 14px; }
+.metadata span { display: inline-flex; gap: 7px; align-items: center; }
+svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+p { font-size: 17px; line-height: 1.4; margin: 8px 0 0; color: var(--text-muted); }
+@media (max-width: 1150px) and (min-width: 761px) { article { grid-template-columns: 190px minmax(0, 1fr); gap: 22px; } h3 { font-size: 20px; } }
+@media (max-width: 600px) { article { grid-template-columns: 110px minmax(0, 1fr); gap: 16px; } .thumbnail { height: 100px; } h3 { font-size: 19px; } p { font-size: 15px; } .metadata { font-size: 12px; gap: 7px; } }
+@media (max-width: 380px) { article { grid-template-columns: 1fr; } .thumbnail { height: 155px; } }
+@media (prefers-reduced-motion: reduce) { img { transition: none; } }

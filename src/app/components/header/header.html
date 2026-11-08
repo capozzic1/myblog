@@ -1,0 +1,13 @@
+<header>
+  <div class="header-inner">
+    <a class="brand" routerLink="/" aria-label="Chris  home"><span aria-hidden="true">/</span>Chris </a>
+    <nav aria-label="Main navigation">
+      <a routerLink="/" [class.active]="isHome()" [attr.aria-current]="isHome() ? 'page' : null">Home</a>
+      <a routerLink="/" fragment="posts" [class.active]="!isHome()">Posts</a>
+      <a routerLink="/" fragment="about">About</a>
+      <button type="button" aria-label="Search blog posts" (click)="searchRequested.emit()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 6 6"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>

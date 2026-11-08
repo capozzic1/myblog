@@ -1,0 +1,40 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<app-header (searchRequested)="toggleSearch()" />
+<main id="main">
+  <app-hero [latestPostUrl]="latestPostUrl()" />
+  <div class="container content-grid">
+    <section id="posts" aria-labelledby="posts-heading">
+      <h2 id="posts-heading">Latest Posts</h2>
+      @if (searchOpen()) {
+        <div class="search-panel">
+          <label for="post-search">Search loaded posts</label>
+          <input #searchInput id="post-search" type="search" placeholder="Search by title, topic, or keyword…"
+            [value]="query()" (input)="query.set(searchInput.value)" />
+          <p role="status">{{ filteredPosts().length }} {{ filteredPosts().length === 1 ? 'post' : 'posts' }} found</p>
+        </div>
+      }
+      <div class="post-list" [attr.aria-busy]="loading()">
+        @for (post of filteredPosts(); track post.id) {
+          <app-post-card [post]="post" />
+        }
+      </div>
+      @if (loading()) {
+        <p role="status">Loading posts…</p>
+      } @else if (error()) {
+        <p role="alert">Posts couldn’t be loaded. Please try again.</p>
+        <button class="load-posts" type="button" (click)="loadPosts()">Try again</button>
+      } @else {
+        @if (!posts().length) {
+          <p class="empty-state">No posts published yet. Check back soon.</p>
+        } @else if (!filteredPosts().length) {
+          <p class="empty-state">No posts match your search. Try another keyword.</p>
+        }
+        @if (hasMore()) {
+          <button class="load-posts" type="button" (click)="loadPosts()">Load more posts</button>
+        }
+      }
+    </section>
+    <app-about />
+  </div>
+</main>
+<app-footer />

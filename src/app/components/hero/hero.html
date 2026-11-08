@@ -1,0 +1,12 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <p class="eyebrow">The Blog</p>
+    <h1 id="hero-title">Reflections on Life</h1>
+    <p class="description">Thoughts on career, learning, health, and figuring it out —<br class="desktop-break" /> one chapter at a time.</p>
+    @if (latestPostUrl(); as url) {
+      <a class="button" [routerLink]="url">Read Latest Post <span aria-hidden="true">→</span></a>
+    } @else {
+      <a class="button" routerLink="/" fragment="posts">Browse Posts <span aria-hidden="true">→</span></a>
+    }
+  </div>
+</section>

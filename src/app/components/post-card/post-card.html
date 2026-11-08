@@ -1,0 +1,14 @@
+<article>
+  <a class="thumbnail" [routerLink]="['/posts', post().slug]" tabindex="-1" aria-hidden="true">
+    <img [src]="post().image" [alt]="post().imageAlt" width="246" height="118" loading="lazy" />
+  </a>
+  <div>
+    <h3><a [routerLink]="['/posts', post().slug]">{{ post().title }}</a></h3>
+    <div class="metadata">
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="1"/><path d="M4 10h16M8 2v6m8-6v6"/></svg><time [attr.datetime]="post().date">{{ post().date | date:'MMM d, y':'UTC' }}</time></span>
+      <span aria-hidden="true">·</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19V6a1 1 0 0 1 1-1h6l3 3h6v3M3 19l4-8h15l-4 8Z"/></svg>{{ post().category }}</span>
+    </div>
+    <p>{{ post().excerpt }}</p>
+  </div>
+</article>
